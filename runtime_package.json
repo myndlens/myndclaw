@@ -1,0 +1,22 @@
+{
+  "name": "obegee-runtime",
+  "version": "1.0.0",
+  "description": "ObeGee Tenant Runtime Manager",
+  "main": "tenant_worker.js",
+  "scripts": {
+    "start": "node tenant_worker.js",
+    "dev": "nodemon tenant_worker.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "axios": "^1.6.0",
+    "dotenv": "^16.3.1",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.0"
+  },
+  "engines": {
+    "node": ">=22.0.0"
+  }
+}
