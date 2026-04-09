@@ -1,0 +1,28 @@
+{
+  // MyndClaw base configuration — per CP VPS
+  agents: {
+    defaults: {
+      workspace: "/data/myndclaw/users/default",
+      model: "anthropic/claude-sonnet-4-20250514",
+      tools: {
+        profile: "messaging",
+        allow: ["web_search", "web_fetch", "sessions_history", "session_status", "message"],
+        deny: ["exec", "write", "edit", "apply_patch", "browser", "canvas", "cron", "gateway"]
+      },
+      timeoutSeconds: 300,
+      skills: ["myndlens-assistant", "myndlens-safety", "myndlens-tools"]
+    },
+    list: []  // Populated dynamically by provisioner
+  },
+  channels: {
+    whatsapp: {
+      accounts: {}  // Populated dynamically by provisioner
+    }
+  },
+  bindings: [],  // Populated dynamically by provisioner
+  providers: {
+    anthropic: {
+      // API key from env: ANTHROPIC_API_KEY
+    }
+  }
+}

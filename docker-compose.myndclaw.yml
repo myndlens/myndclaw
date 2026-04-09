@@ -1,0 +1,25 @@
+services:
+  myndclaw:
+    build: .
+    container_name: myndclaw
+    restart: unless-stopped
+    ports:
+      - "18789:18789"
+    volumes:
+      - /data/myndclaw:/data/myndclaw
+    env_file:
+      - .env
+    environment:
+      - NODE_ENV=production
+      - OPENCLAW_STATE_DIR=/data/myndclaw/state
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:18789"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+    networks:
+      - myndlens
+
+networks:
+  myndlens:
+    external: true
