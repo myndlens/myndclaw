@@ -207,12 +207,25 @@ CHANNEL_PID=$!
 cleanup() {
   echo "[Entrypoint] Received shutdown signal. Stopping background services (DS PID=$DS_PID, CHANNEL PID=$CHANNEL_PID)..."
   kill "$DS_PID" 2>/dev/null || true
+  kill "$API_PID" 2>/dev/null || true
   kill "$CHANNEL_PID" 2>/dev/null || true
   wait "$DS_PID" 2>/dev/null || true
   wait "$CHANNEL_PID" 2>/dev/null || true
   echo "[Entrypoint] Shutdown complete."
 }
 trap cleanup SIGTERM SIGINT
+
+
+# ── Start MyndLens REST API (claw-spawn endpoint) ────────────────────────────
+if [ -f /app/myndlens-api.mjs ]; then
+  (
+    sleep 3
+    echo "[Entrypoint] Starting MyndLens REST API on port ${MYNDLENS_API_PORT:-18790}..."
+    node /app/myndlens-api.mjs
+  ) &
+  API_PID=$!
+  echo "[Entrypoint] MyndLens API started (PID=$API_PID)"
+fi
 
 # ── Start OpenClaw gateway in foreground ──────────────────────────────────────
 echo "[Entrypoint] Starting OpenClaw gateway..."
