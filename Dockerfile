@@ -8,8 +8,8 @@ RUN corepack enable && corepack prepare pnpm@latest --activate
 # Copy dependency files first (cache layer)
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
-# Install production dependencies
-RUN pnpm install --frozen-lockfile --prod || pnpm install --prod
+# Install production dependencies (skip postinstall — stripped scripts)
+RUN pnpm install --frozen-lockfile --prod --ignore-scripts || pnpm install --prod --ignore-scripts
 
 # Copy application code
 COPY src/ ./src/
